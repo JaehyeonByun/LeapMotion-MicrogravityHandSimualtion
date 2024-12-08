@@ -64,9 +64,7 @@ namespace Leap.PhysicalHands
                 SetContactMode(value);
             }
         }
-
-  
-
+        
         /// <summary>
         /// Set the enum for contact mode.
         /// 0 = Hard Contact

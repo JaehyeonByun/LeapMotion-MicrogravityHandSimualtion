@@ -442,5 +442,8 @@ namespace Leap.PhysicalHands
                 physicalHandsManager = GetComponent<PhysicalHandsManager>();
             }
         }
+        
+        
+        
     }
 }
