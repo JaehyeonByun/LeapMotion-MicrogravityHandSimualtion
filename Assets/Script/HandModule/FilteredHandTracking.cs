@@ -8,8 +8,8 @@ public class FilteredHandJoints : MonoBehaviour
 
     [Header("OneEuroFilter Parameters")]
     public float freq = 90.0f;       // 업데이트 주파수 (Leap Motion은 약 90Hz)
-    public float minCutoff = 1.0f;   // 최소 컷오프 주파수
-    public float beta = 0.007f;      // 속도에 따른 반응도 조정
+    public float minCutoff = 0.1f;   // 최소 컷오프 주파수
+    public float beta = 0.05f;       // 속도에 따른 반응도 조정
     public float dCutoff = 1.0f;     // 변화율에 대한 컷오프 주파수
 
     // 각 조인트에 대응하는 OneEuroFilter 인스턴스
@@ -28,8 +28,9 @@ public class FilteredHandJoints : MonoBehaviour
 
     void Update()
     {
-        foreach (Transform joint in jointTransforms)
+        for (int i = 0; i < jointTransforms.Count; i++)
         {
+            Transform joint = jointTransforms[i];
             if (joint == null) continue;
 
             // 원래 조인트의 위치 가져오기
@@ -37,6 +38,12 @@ public class FilteredHandJoints : MonoBehaviour
 
             // OneEuroFilter로 위치 필터링
             Vector3 filteredPosition = jointFilters[joint].Filter(rawPosition, Time.time);
+
+            // 첫 번째 요소의 기존 값과 필터링된 값 출력
+            if (i == 0)
+            {
+                Debug.Log($"Joint: {joint.name} | Raw Position: {rawPosition} | Filtered Position: {filteredPosition}");
+            }
 
             // 필터링된 위치 적용
             joint.position = filteredPosition;
