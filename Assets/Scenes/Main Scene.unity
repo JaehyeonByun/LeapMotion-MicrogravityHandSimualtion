@@ -9262,7 +9262,7 @@ MonoBehaviour:
   - {fileID: 1801681581}
   - {fileID: 1282601340}
   - {fileID: 319759757}
-  - {fileID: 1140282136}
+  - {fileID: 0}
   - {fileID: 2015460528}
   - {fileID: 25961936}
   freq: 90
@@ -10266,6 +10266,7 @@ GameObject:
   - component: {fileID: 1157404403}
   - component: {fileID: 1157404402}
   - component: {fileID: 1157404404}
+  - component: {fileID: 1157404405}
   m_Layer: 0
   m_Name: GodObjectManager
   m_TagString: Untagged
@@ -10280,7 +10281,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1157404401}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 82333b02f16f82d459a342c68d89fb27, type: 3}
   m_Name: 
@@ -10388,6 +10389,67 @@ MonoBehaviour:
   frictionCoefficientStatic: 0.1
   frictionCoefficientDynamic: 0.05
   contactForceMultiplier: 50
+--- !u!114 &1157404405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1157404401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4080c12a20763ca4f9b37f15ca42417c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackedJoints:
+  - {fileID: 1207357417}
+  - {fileID: 1467171557}
+  - {fileID: 499087186}
+  - {fileID: 905603901}
+  - {fileID: 811052345}
+  - {fileID: 101845435}
+  - {fileID: 369047299}
+  - {fileID: 372329859}
+  - {fileID: 1814916155}
+  - {fileID: 381982793}
+  - {fileID: 731427754}
+  - {fileID: 1703911132}
+  - {fileID: 99541506}
+  - {fileID: 265682428}
+  - {fileID: 228547503}
+  - {fileID: 316787249}
+  - {fileID: 319759757}
+  - {fileID: 1282601340}
+  - {fileID: 1801681581}
+  - {fileID: 25961936}
+  - {fileID: 2015460528}
+  renderedJoints:
+  - {fileID: 895675582}
+  - {fileID: 917988220}
+  - {fileID: 278050031}
+  - {fileID: 1992061119}
+  - {fileID: 1065459132}
+  - {fileID: 217403074}
+  - {fileID: 127675014}
+  - {fileID: 1464063740}
+  - {fileID: 1999150578}
+  - {fileID: 924290738}
+  - {fileID: 1887703424}
+  - {fileID: 909139035}
+  - {fileID: 1806852100}
+  - {fileID: 321481128}
+  - {fileID: 2140615728}
+  - {fileID: 376010450}
+  - {fileID: 1768042554}
+  - {fileID: 1657917563}
+  - {fileID: 774436837}
+  - {fileID: 541845500}
+  - {fileID: 1515863118}
+  godObject: []
+  penetrationDepthThreshold: 0.001
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &1168254638
 GameObject:
   m_ObjectHideFlags: 0
@@ -12319,7 +12381,7 @@ GameObject:
   - component: {fileID: 2024444960}
   - component: {fileID: 2024444959}
   - component: {fileID: 2024444958}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
