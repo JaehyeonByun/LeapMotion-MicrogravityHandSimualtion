@@ -38,11 +38,6 @@ public class FilteredHandJoints : MonoBehaviour
 
             // OneEuroFilter로 위치 필터링
             Vector3 filteredPosition = jointFilters[joint].Filter(rawPosition, Time.time);
-            
-            if (i == 0)
-            {
-                Debug.Log($"Joint: {joint.name} | Raw Position: {rawPosition} | Filtered Position: {filteredPosition}");
-            }
 
             // 필터링된 위치 적용
             joint.position = filteredPosition;
