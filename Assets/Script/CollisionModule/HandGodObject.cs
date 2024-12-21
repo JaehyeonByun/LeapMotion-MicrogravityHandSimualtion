@@ -9,9 +9,10 @@ public class HandGodObject : MonoBehaviour
     public List<Transform> renderedJoints;
 
     public float penetrationDepthThreshold = 0.01f; // 관통 깊이 임계값
+    public float smoothingFactor = 0.1f; // 렌더링 손 움직임 부드럽게 처리
     public LayerMask collisionLayer; // 충돌 감지 레이어
 
-    void Update()
+    private void Update()
     {
         for (int i = 0; i < trackedJoints.Count; i++)
         {
@@ -23,7 +24,8 @@ public class HandGodObject : MonoBehaviour
 
             if (isColliding)
             {
-                UpdateRenderedJoint(renderedJoint, closestPoint);
+                Debug.Log("UpdateRenderedJoint");
+                UpdateRenderedJoint(renderedJoint, closestPoint, trackedJoint);
             }
             else
             {
@@ -50,17 +52,27 @@ public class HandGodObject : MonoBehaviour
         return false;
     }
 
-    private void UpdateRenderedJoint(Transform renderedJoint, Vector3 closestPoint)
+    private void UpdateRenderedJoint(Transform renderedJoint, Vector3 closestPoint, Transform trackedJoint)
     {
-        // 렌더링 손을 충돌 지점에 위치시킴
-        renderedJoint.position = closestPoint;
-        renderedJoint.rotation = Quaternion.Euler(270, 0, 0);
+        renderedJoint.position = Vector3.Lerp(renderedJoint.position, closestPoint, smoothingFactor);
+
+        Vector3 normalDirection = (renderedJoint.position - trackedJoint.position).normalized;
+        Quaternion targetRotation = Quaternion.LookRotation(normalDirection, Vector3.up);
+        renderedJoint.rotation = Quaternion.Lerp(renderedJoint.rotation, targetRotation, smoothingFactor);
     }
 
     private void AlignRenderedJoint(Transform renderedJoint, Transform trackedJoint)
     {
-        // 렌더링 손과 트래킹 손 위치 일치
-        renderedJoint.position = trackedJoint.position;
-        renderedJoint.rotation = trackedJoint.rotation * Quaternion.Euler(270, 0, 0);
+        renderedJoint.position = Vector3.Lerp(renderedJoint.position, trackedJoint.position, smoothingFactor);
+        renderedJoint.rotation = Quaternion.Lerp(renderedJoint.rotation, trackedJoint.rotation, smoothingFactor);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        foreach (var joint in trackedJoints)
+        {
+            Gizmos.DrawWireSphere(joint.position, 0.01f);
+        }
     }
 }

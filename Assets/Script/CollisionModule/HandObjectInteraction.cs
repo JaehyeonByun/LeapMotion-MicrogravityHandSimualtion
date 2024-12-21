@@ -2,7 +2,9 @@ using UnityEngine;
 using System.Collections.Generic;
 public class HandObjectInteraction : MonoBehaviour
 {
-[Header("Tracked Joints")]
+    [SerializeField] private HandGodObject _handGodObject;
+
+    [Header("Tracked Joints")]
     public List<Transform> trackedJoints;
 
     [Header("Virtual Object")]
@@ -13,6 +15,17 @@ public class HandObjectInteraction : MonoBehaviour
     public float frictionCoefficientDynamic = 0.05f; // 동적 마찰 계수 (φ)
     public float contactForceMultiplier = 50.0f; // 접촉 힘 계산용 상수
 
+    void Awake()
+    {
+        if (_handGodObject != null)
+        {
+            trackedJoints = _handGodObject.GetComponent<HandGodObject>().trackedJoints;
+        }
+        else
+        {
+            Debug.LogWarning("_handGodObject가 설정되지 않았습니다.");
+        }
+    }
     private void FixedUpdate()
     {
         foreach (Transform joint in trackedJoints)
