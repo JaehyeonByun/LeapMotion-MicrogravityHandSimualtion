@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 127675018}
   m_Layer: 0
   m_Name: Sphere (6)
-  m_TagString: Untagged
+  m_TagString: RenderedHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -423,7 +423,7 @@ GameObject:
   - component: {fileID: 217403078}
   m_Layer: 0
   m_Name: Sphere (5)
-  m_TagString: Untagged
+  m_TagString: RenderedHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -622,7 +622,7 @@ GameObject:
   - component: {fileID: 278050035}
   m_Layer: 0
   m_Name: Sphere (2)
-  m_TagString: Untagged
+  m_TagString: RenderedHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -768,7 +768,7 @@ GameObject:
   - component: {fileID: 321481132}
   m_Layer: 0
   m_Name: Sphere (13)
-  m_TagString: Untagged
+  m_TagString: RenderedHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7629,6 +7629,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.4224482
       objectReference: {fileID: 0}
+    - target: {fileID: 1604101096254928737, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
+      objectReference: {fileID: 0}
     - target: {fileID: 1697798068703742163, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_Name
       value: Thumb_3_Render
@@ -7668,6 +7672,14 @@ PrefabInstance:
     - target: {fileID: 1936877858436319551, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0.070640914
+      objectReference: {fileID: 0}
+    - target: {fileID: 1962191392002838428, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
+      objectReference: {fileID: 0}
+    - target: {fileID: 1980979543397902583, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
       objectReference: {fileID: 0}
     - target: {fileID: 1985620430507363663, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_LocalRotation.y
@@ -7733,6 +7745,14 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 6.984917e-10
       objectReference: {fileID: 0}
+    - target: {fileID: 2196961668993010027, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
+      objectReference: {fileID: 0}
+    - target: {fileID: 2261212898376618539, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
+      objectReference: {fileID: 0}
     - target: {fileID: 2336856477981165495, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_Name
       value: Middle_End_Render
@@ -7741,9 +7761,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pincky_3_Render
       objectReference: {fileID: 0}
+    - target: {fileID: 2371778572598508121, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
+      objectReference: {fileID: 0}
     - target: {fileID: 2618141968851831139, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_Name
       value: Pincky_1_Render
+      objectReference: {fileID: 0}
+    - target: {fileID: 2772508595174186304, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
+      objectReference: {fileID: 0}
+    - target: {fileID: 3093097790190911919, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
       objectReference: {fileID: 0}
     - target: {fileID: 3129430349203176643, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_Name
@@ -7784,6 +7816,10 @@ PrefabInstance:
     - target: {fileID: 3591429339348112633, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.010999
+      objectReference: {fileID: 0}
+    - target: {fileID: 3787525304698062389, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
       objectReference: {fileID: 0}
     - target: {fileID: 3817419105692851641, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_Name
@@ -7857,6 +7893,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.010999084
       objectReference: {fileID: 0}
+    - target: {fileID: 4275088545001822452, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
+      objectReference: {fileID: 0}
     - target: {fileID: 4368620303756670581, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_LocalRotation.w
       value: -0.9890741
@@ -7917,6 +7957,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.5341111
       objectReference: {fileID: 0}
+    - target: {fileID: 4850847615984897396, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
+      objectReference: {fileID: 0}
     - target: {fileID: 5058286354642210900, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -7933,6 +7977,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.0000000020954751
       objectReference: {fileID: 0}
+    - target: {fileID: 5263732213017483966, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
+      objectReference: {fileID: 0}
     - target: {fileID: 5341357166814713423, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.0080724
@@ -7944,6 +7992,10 @@ PrefabInstance:
     - target: {fileID: 5341357166814713423, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_LocalScale.z
       value: 1.5341111
+      objectReference: {fileID: 0}
+    - target: {fileID: 5383766442210828921, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
       objectReference: {fileID: 0}
     - target: {fileID: 5436192950556636316, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7960,6 +8012,10 @@ PrefabInstance:
     - target: {fileID: 5436192950556636316, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0.0000000032596283
+      objectReference: {fileID: 0}
+    - target: {fileID: 5440331101923144389, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
       objectReference: {fileID: 0}
     - target: {fileID: 5569369795472489707, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_Name
@@ -7993,6 +8049,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
+    - target: {fileID: 5890129907344103441, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
+      objectReference: {fileID: 0}
     - target: {fileID: 6084125544348683504, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_Name
       value: Index_1_Renderer
@@ -8024,6 +8084,14 @@ PrefabInstance:
     - target: {fileID: 6185122059462457314, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0.17581907
+      objectReference: {fileID: 0}
+    - target: {fileID: 6226711263218689892, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
+      objectReference: {fileID: 0}
+    - target: {fileID: 6227024587504037299, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
       objectReference: {fileID: 0}
     - target: {fileID: 6256932073992458395, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_RootOrder
@@ -8121,6 +8189,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ring_1_Render
       objectReference: {fileID: 0}
+    - target: {fileID: 6754408215280255626, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
+      objectReference: {fileID: 0}
     - target: {fileID: 6809196643759128441, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.3168616
@@ -8164,6 +8236,10 @@ PrefabInstance:
     - target: {fileID: 7048584979228838541, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.000000006286426
+      objectReference: {fileID: 0}
+    - target: {fileID: 7132493449244494711, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
       objectReference: {fileID: 0}
     - target: {fileID: 7358050964414237190, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_Name
@@ -8209,6 +8285,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shoulder_Render
       objectReference: {fileID: 0}
+    - target: {fileID: 7939570244198644702, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
+      objectReference: {fileID: 0}
     - target: {fileID: 8268243009311966841, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.0069758
@@ -8221,9 +8301,21 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.3903443
       objectReference: {fileID: 0}
+    - target: {fileID: 8432718979188083237, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
+      objectReference: {fileID: 0}
     - target: {fileID: 8512903701569490918, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_LocalRotation.z
       value: 2.7755556e-17
+      objectReference: {fileID: 0}
+    - target: {fileID: 8604121177646639276, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
+      objectReference: {fileID: 0}
+    - target: {fileID: 8861377423445563494, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
       objectReference: {fileID: 0}
     - target: {fileID: 8908260730495705204, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_LocalScale.x
@@ -8237,6 +8329,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.3903443
       objectReference: {fileID: 0}
+    - target: {fileID: 8990243953812385964, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
+      objectReference: {fileID: 0}
     - target: {fileID: 9039172421743598896, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_Name
       value: Elbow_Render
@@ -8248,6 +8344,10 @@ PrefabInstance:
     - target: {fileID: 9168524042742786539, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9211318693583775309, guid: f1a2c7a6fb148664eabf5aad36e0aafc, type: 3}
+      propertyPath: m_TagString
+      value: TrackedHand
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -8479,7 +8579,7 @@ GameObject:
   - component: {fileID: 376010454}
   m_Layer: 0
   m_Name: Sphere (15)
-  m_TagString: Untagged
+  m_TagString: RenderedHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8897,7 +8997,7 @@ GameObject:
   - component: {fileID: 541845504}
   m_Layer: 0
   m_Name: Sphere (19)
-  m_TagString: Untagged
+  m_TagString: RenderedHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9043,7 +9143,7 @@ GameObject:
   - component: {fileID: 774436841}
   m_Layer: 0
   m_Name: Sphere (18)
-  m_TagString: Untagged
+  m_TagString: RenderedHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9440,7 +9540,7 @@ GameObject:
   - component: {fileID: 895675586}
   m_Layer: 0
   m_Name: Sphere
-  m_TagString: Untagged
+  m_TagString: RenderedHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9629,7 +9729,7 @@ GameObject:
   - component: {fileID: 909139039}
   m_Layer: 0
   m_Name: Sphere (11)
-  m_TagString: Untagged
+  m_TagString: RenderedHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9765,7 +9865,7 @@ GameObject:
   - component: {fileID: 917988224}
   m_Layer: 0
   m_Name: Sphere (1)
-  m_TagString: Untagged
+  m_TagString: RenderedHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9901,7 +10001,7 @@ GameObject:
   - component: {fileID: 924290742}
   m_Layer: 0
   m_Name: Sphere (9)
-  m_TagString: Untagged
+  m_TagString: RenderedHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10090,7 +10190,7 @@ GameObject:
   - component: {fileID: 1065459136}
   m_Layer: 0
   m_Name: Sphere (4)
-  m_TagString: Untagged
+  m_TagString: RenderedHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10858,7 +10958,7 @@ GameObject:
   - component: {fileID: 1464063744}
   m_Layer: 0
   m_Name: Sphere (7)
-  m_TagString: Untagged
+  m_TagString: RenderedHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11052,7 +11152,7 @@ GameObject:
   - component: {fileID: 1515863122}
   m_Layer: 0
   m_Name: Sphere (20)
-  m_TagString: Untagged
+  m_TagString: RenderedHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11241,7 +11341,7 @@ GameObject:
   - component: {fileID: 1657917567}
   m_Layer: 0
   m_Name: Sphere (17)
-  m_TagString: Untagged
+  m_TagString: RenderedHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11430,7 +11530,7 @@ GameObject:
   - component: {fileID: 1768042558}
   m_Layer: 0
   m_Name: Sphere (16)
-  m_TagString: Untagged
+  m_TagString: RenderedHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11619,7 +11719,7 @@ GameObject:
   - component: {fileID: 1806852104}
   m_Layer: 0
   m_Name: Sphere (12)
-  m_TagString: Untagged
+  m_TagString: RenderedHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11813,7 +11913,7 @@ GameObject:
   - component: {fileID: 1887703428}
   m_Layer: 0
   m_Name: Sphere (10)
-  m_TagString: Untagged
+  m_TagString: RenderedHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12002,7 +12102,7 @@ GameObject:
   - component: {fileID: 1992061123}
   m_Layer: 0
   m_Name: Sphere (3)
-  m_TagString: Untagged
+  m_TagString: RenderedHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12138,7 +12238,7 @@ GameObject:
   - component: {fileID: 1999150582}
   m_Layer: 0
   m_Name: Sphere (8)
-  m_TagString: Untagged
+  m_TagString: RenderedHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12648,7 +12748,7 @@ GameObject:
   - component: {fileID: 2140615732}
   m_Layer: 0
   m_Name: Sphere (14)
-  m_TagString: Untagged
+  m_TagString: RenderedHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
