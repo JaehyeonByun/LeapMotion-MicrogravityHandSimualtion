@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class CustomCollisionSolver : MonoBehaviour
 {
- // 비침투 강성 계수: 값이 클수록 겹침 발생 시 물체를 강하게 밀어냄
+    // 비침투 강성 계수: 값이 클수록 겹침 발생 시 물체를 강하게 밀어냄
     public float kN = 500f;  
     private Rigidbody handRigidbody;
 
