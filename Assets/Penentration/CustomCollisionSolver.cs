@@ -11,11 +11,8 @@ public class CustomCollisionSolver : MonoBehaviour
     {
         handRigidbody = GetComponent<Rigidbody>();
     }
-
-    // OnCollisionStay: 매 물리 프레임마다 충돌 중인 접점에 대해 콜백 호출
     void OnCollisionStay(Collision collision)
     {
-        // 충돌 중인 모든 접촉점(ContactPoint)에 대해 반복
         foreach (ContactPoint contact in collision.contacts)
         {
             Vector3 contactPoint = contact.point;
@@ -27,8 +24,7 @@ public class CustomCollisionSolver : MonoBehaviour
             
             Vector3 direction;
             float distance;
-
-            // Physics.ComputePenetration: 두 콜라이더가 얼마나 겹쳤는지 계산
+            
             bool overlapped = Physics.ComputePenetration(
                 thisCol, thisCol.transform.position, thisCol.transform.rotation,
                 otherCol, otherCol.transform.position, otherCol.transform.rotation,
@@ -46,8 +42,6 @@ public class CustomCollisionSolver : MonoBehaviour
                     // AddForceAtPosition: 특정 지점(contactPoint)에 힘을 가할 수 있어 회전 모멘트까지 반영 가능.
                     otherRb.AddForceAtPosition(restoreForce, contactPoint);
                 }
-                
-                // Kinematic으로 놓는 경우 손이 움직이지 않음. 만약 손을 Dynamic으로 설정했다면, 이 힘으로 인해 손도 충돌에 반응하게 할 수 있음.
                 if (handRigidbody != null && handRigidbody.isKinematic == false)
                 {
                     // 반작용력 = -restoreForce
