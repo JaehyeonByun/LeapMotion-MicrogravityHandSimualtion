@@ -1,59 +1,116 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Renderer))]
 public class CustomCollisionSolver : MonoBehaviour
 {
-    // 비침투 강성 계수: 값이 클수록 겹침 발생 시 물체를 강하게 밀어냄
-    public float kN = 500f;  
+   public float kN = 500f; // 비침투 강성 계수
+    public float minPenetration = 0.01f; // 최소 침투 거리
+    public float maxForceMagnitude = 1000f; // 최대 복원력 크기
+    public float dampingFactor = 0.9f; // 복원력 감쇠 계수
+
     private Rigidbody handRigidbody;
+    private Renderer objectRenderer;
+    private Color defaultColor = Color.blue; // 기본 색상 (파란색)
+    private Color contactColor = Color.yellow; // 접촉 색상 (노란색)
+    private Color penetrationColor = Color.red; // 침투 색상 (빨간색)
+
+    private bool isPenetrating = false;
+    private bool isContacting = false;
 
     void Awake()
     {
         handRigidbody = GetComponent<Rigidbody>();
+        objectRenderer = GetComponent<Renderer>();
+        objectRenderer.material.color = defaultColor; // 초기 색상 설정
     }
 
-    // OnCollisionStay: 매 물리 프레임마다 충돌 중인 접점에 대해 콜백 호출
     void OnCollisionStay(Collision collision)
     {
-        // 충돌 중인 모든 접촉점(ContactPoint)에 대해 반복
+        isContacting = false;
+        isPenetrating = false;
+
         foreach (ContactPoint contact in collision.contacts)
         {
             Vector3 contactPoint = contact.point;
-            //normal은 "이 접촉점에서 충돌 대상 오브젝트가 튕겨나가야 할 방향(반대 오브젝트 기준)"을 반영.
-            Vector3 normal = contact.normal; 
+            Vector3 normal = contact.normal;
 
             Collider thisCol = contact.thisCollider;
             Collider otherCol = contact.otherCollider;
-            
+
             Vector3 direction;
             float distance;
 
-            // Physics.ComputePenetration: 두 콜라이더가 얼마나 겹쳤는지 계산
             bool overlapped = Physics.ComputePenetration(
                 thisCol, thisCol.transform.position, thisCol.transform.rotation,
                 otherCol, otherCol.transform.position, otherCol.transform.rotation,
                 out direction, out distance
             );
-            
-            if (overlapped && distance > 0f)
+
+            if (overlapped)
             {
-                // 복원력 (restoreForce) 계산 : F_n = kN * (침투 깊이) * (침투 벗어나는 방향)
-                // direction은 침투를 벗어나기 위한 단위 벡터이며, distance는 penetration depth를 의미.
-                Vector3 restoreForce = kN * distance * direction;
-                Rigidbody otherRb = collision.rigidbody;
-                if (otherRb != null && otherRb.isKinematic == false)
+                isContacting = true;
+                if (distance > minPenetration)
                 {
-                    // AddForceAtPosition: 특정 지점(contactPoint)에 힘을 가할 수 있어 회전 모멘트까지 반영 가능.
-                    otherRb.AddForceAtPosition(restoreForce, contactPoint);
-                }
-                
-                // Kinematic으로 놓는 경우 손이 움직이지 않음. 만약 손을 Dynamic으로 설정했다면, 이 힘으로 인해 손도 충돌에 반응하게 할 수 있음.
-                if (handRigidbody != null && handRigidbody.isKinematic == false)
-                {
-                    // 반작용력 = -restoreForce
-                    handRigidbody.AddForceAtPosition(-restoreForce, contactPoint);
+                    isPenetrating = true;
+
+                    // 복원력 계산
+                    Vector3 restoreForce = kN * distance * direction;
+
+                    // 복원력 감쇠 적용
+                    restoreForce *= dampingFactor;
+
+                    // 복원력 크기 제한
+                    if (restoreForce.magnitude > maxForceMagnitude)
+                    {
+                        restoreForce = restoreForce.normalized * maxForceMagnitude;
+                    }
+
+                    // 충돌 물체에 복원력 적용
+                    Rigidbody otherRb = collision.rigidbody;
+                    if (otherRb != null && !otherRb.isKinematic)
+                    {
+                        otherRb.AddForceAtPosition(restoreForce, contactPoint);
+                    }
+
+                    // 현재 물체에도 반작용력 적용
+                    if (handRigidbody != null && !handRigidbody.isKinematic)
+                    {
+                        handRigidbody.AddForceAtPosition(-restoreForce, contactPoint);
+                    }
+
+                    // 침투 깊이 시각화
+                    Debug.DrawLine(contactPoint, contactPoint + (direction * distance), penetrationColor);
+
+                    // 복원력 시각화
+                    Debug.DrawLine(contactPoint, contactPoint + (restoreForce.normalized * 0.1f), Color.blue);
                 }
             }
+        }
+
+        UpdateColor();
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        isContacting = false;
+        isPenetrating = false;
+        UpdateColor();
+    }
+
+    private void UpdateColor()
+    {
+        if (isPenetrating)
+        {
+            objectRenderer.material.color = penetrationColor; // 침투 중 빨간색
+        }
+        else if (isContacting)
+        {
+            objectRenderer.material.color = contactColor; // 접촉 중 노란색
+        }
+        else
+        {
+            objectRenderer.material.color = defaultColor; // 충돌 없음 파란색
         }
     }
 }

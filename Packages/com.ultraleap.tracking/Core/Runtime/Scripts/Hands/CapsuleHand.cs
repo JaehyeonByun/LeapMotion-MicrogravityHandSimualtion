@@ -53,6 +53,9 @@ namespace Leap
         private static Color[] _rightColorList = { new Color(1.0f, 0.0f, 0.0f), new Color(1.0f, 1.0f, 0.0f), new Color(1.0f, 0.5f, 0.0f) };
 
         [SerializeField]
+        private float kN = 500; 
+        
+        [SerializeField]
         private Chirality handedness;
 
         [SerializeField]
@@ -543,11 +546,44 @@ namespace Leap
 
         private void drawSphere(Vector3 position, float radius)
         {
-            if (isNaN(position)) { return; }
+            if (isNaN(position))
+            {
+                return;
+            }
 
-            //multiply radius by 2 because the default unity sphere has a radius of 0.5 meters at scale 1.
-            _sphereMatrices[_curSphereIndex++] = Matrix4x4.TRS(position,
-              Quaternion.identity, Vector3.one * radius * 2.0f * currentLossyScaleX);
+            // Multiply radius by 2 because the default Unity sphere has a radius of 0.5 meters at scale 1.
+            _sphereMatrices[_curSphereIndex++] = Matrix4x4.TRS(position, Quaternion.identity, Vector3.one * radius * 2.0f * currentLossyScaleX);
+                      
+            // Check if a GameObject for this joint already exists
+            string sphereName = $"SphereJoint_{_curSphereIndex}";
+            GameObject existingSphere = GameObject.Find(sphereName);
+            if (existingSphere == null)
+            {
+                // Create a new GameObject for the joint
+                GameObject jointSphere = new GameObject(sphereName);
+                jointSphere.transform.position = position;
+                jointSphere.transform.localScale = Vector3.one * radius * 2.0f;
+                jointSphere.layer = gameObject.layer;
+
+                // Attach SphereCollider
+                SphereCollider sphereCollider = jointSphere.AddComponent<SphereCollider>();
+                sphereCollider.radius = 0.5f;
+
+                // Attach Rigidbody for physics
+                Rigidbody rigidbody = jointSphere.AddComponent<Rigidbody>();
+                rigidbody.mass = 0.1f; // Set a small mass for the joint
+                rigidbody.linearDamping = 0.5f; // Optional: Adjust drag for smoother physics
+                rigidbody.angularDamping = 0.5f;
+                rigidbody.useGravity = false; // Optional: Disable gravity if not needed
+
+                // Make the joint sphere a child of this GameObject for better organization
+                jointSphere.transform.SetParent(this.transform);
+            }
+            else
+            {
+                // Update position if the sphere already exists
+                existingSphere.transform.position = position;
+            }
         }
 
         private void drawCylinder(Vector3 a, Vector3 b)
