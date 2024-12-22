@@ -52,6 +52,8 @@ namespace Leap
         private static Color[] _leftColorList = { new Color(0.0f, 0.0f, 1.0f), new Color(0.2f, 0.0f, 0.4f), new Color(0.0f, 0.2f, 0.2f) };
         private static Color[] _rightColorList = { new Color(1.0f, 0.0f, 0.0f), new Color(1.0f, 1.0f, 0.0f), new Color(1.0f, 0.5f, 0.0f) };
 
+        [SerializeField] private float kN = 500;
+        
         [SerializeField]
         private Chirality handedness;
 
@@ -543,12 +545,15 @@ namespace Leap
 
         private void drawSphere(Vector3 position, float radius)
         {
-            if (isNaN(position)) { return; }
+            if (isNaN(position))
+            {
+                return;
+            }
 
-            //multiply radius by 2 because the default unity sphere has a radius of 0.5 meters at scale 1.
+            // Multiply radius by 2 because the default Unity sphere has a radius of 0.5 meters at scale 1.
             _sphereMatrices[_curSphereIndex++] = Matrix4x4.TRS(position,
-              Quaternion.identity, Vector3.one * radius * 2.0f * currentLossyScaleX);
-            
+                Quaternion.identity, Vector3.one * radius * 2.0f * currentLossyScaleX);
+
             // Check if a GameObject for this joint already exists
             string sphereName = $"SphereJoint_{_curSphereIndex}";
             GameObject existingSphere = GameObject.Find(sphereName);
@@ -566,18 +571,64 @@ namespace Leap
 
                 // Attach Rigidbody for physics
                 Rigidbody rigidbody = jointSphere.AddComponent<Rigidbody>();
-                rigidbody.mass = 0.1f; // Set a small mass for the joint
+                rigidbody.mass = 0.1f;
                 rigidbody.linearDamping = 0.5f; // Optional: Adjust drag for smoother physics
                 rigidbody.angularDamping = 0.5f;
-                rigidbody.useGravity = false; // Optional: Disable gravity if not needed
+                rigidbody.useGravity = false;
+                rigidbody.isKinematic = false; // Allow dynamic physics
 
-                // Make the joint sphere a child of this GameObject for better organization
-                jointSphere.transform.SetParent(this.transform);
+                // Perform penetration handling independently
+                PerformPenetrationHandling(jointSphere, radius);
             }
             else
             {
                 // Update position if the sphere already exists
                 existingSphere.transform.position = position;
+
+                // Perform penetration handling independently
+                PerformPenetrationHandling(existingSphere, radius);
+            }
+        }
+
+        private void PerformPenetrationHandling(GameObject sphere, float radius)
+        {  
+            Vector3 spherePosition = sphere.transform.position;
+
+            // Check for overlapping colliders using a spherical area
+            Collider[] overlappingColliders = Physics.OverlapSphere(spherePosition, radius);
+            foreach (Collider otherCollider in overlappingColliders)
+            {
+                if (otherCollider.gameObject == sphere) continue; // Skip self-collision
+
+                Vector3 direction;
+                float distance;
+
+                // Compute penetration between the sphere and the overlapping collider
+                bool overlapped = Physics.ComputePenetration(
+                    sphere.GetComponent<Collider>(), spherePosition, sphere.transform.rotation,
+                    otherCollider, otherCollider.transform.position, otherCollider.transform.rotation,
+                    out direction, out distance
+                );
+
+                if (overlapped && distance > 0f)
+                {
+                    // Compute restoration force
+                    Vector3 restoreForce = kN * distance * direction;
+
+                    // Apply force to the other object if it has a Rigidbody
+                    Rigidbody otherRigidbody = otherCollider.attachedRigidbody;
+                    if (otherRigidbody != null && !otherRigidbody.isKinematic)
+                    {
+                        otherRigidbody.AddForce(restoreForce, ForceMode.Force);
+                    }
+
+                    // Apply reaction force to this sphere's Rigidbody
+                    Rigidbody sphereRigidbody = sphere.GetComponent<Rigidbody>();
+                    if (sphereRigidbody != null && !sphereRigidbody.isKinematic)
+                    {
+                        sphereRigidbody.AddForce(-restoreForce, ForceMode.Force);
+                    }
+                }
             }
         }
 
