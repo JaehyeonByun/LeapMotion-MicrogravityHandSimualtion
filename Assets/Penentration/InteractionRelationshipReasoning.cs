@@ -20,7 +20,6 @@ public class InteractionRelationshipReasoning : MonoBehaviour
     void Awake()
     {
         objectRigidbody = GetComponent<Rigidbody>();
-        objectRigidbody.useGravity = false; // 무중력
     }
 
     void OnCollisionStay(Collision collision)
