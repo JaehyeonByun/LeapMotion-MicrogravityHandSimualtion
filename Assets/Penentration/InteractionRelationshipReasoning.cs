@@ -7,9 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class InteractionRelationshipReasoning : MonoBehaviour
 {
-    // 복원 계수: (0 = 완전 비탄성, 1 = 완전 탄성)
     public float restitutionCoefficient = 0.1f;
-    // 강성 계수: 접촉 강도를 조절, 값이 클수록 강한 접촉력 생성
     public float gamma = 50f;
 
     public float staticFrictionCoefficient = 0.7f;
@@ -51,6 +49,7 @@ public class InteractionRelationshipReasoning : MonoBehaviour
                     handRigidbody.AddForceAtPosition(-impulse, contactPoint, ForceMode.Impulse);
 
                     // 충격량 시각화
+                    Debug.DrawLine(contactPoint, contactPoint + impulse, Color.red, 0.5f);
                     Debug.Log($"Impulse applied at {contactPoint}: {impulse}");
                 }
 
