@@ -3,50 +3,72 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class CustomCollisionSolver : MonoBehaviour
 {
-    // 비침투 강성 계수: 값이 클수록 겹침 발생 시 물체를 강하게 밀어냄
-    public float kN = 500f;  
+  public float kN = 500f; // 비침투 강성 계수
+    public float minPenetration = 0.01f; // 최소 침투 거리
+    public float maxForceMagnitude = 1000f; // 최대 복원력 크기
+    public float dampingFactor = 0.9f; // 복원력 감쇠 계수
+
     private Rigidbody handRigidbody;
+
+    public Color penetrationColor = Color.red; // 침투 깊이 시각화 색상
+    public Color forceColor = Color.blue; // 복원력 시각화 색상
 
     void Awake()
     {
         handRigidbody = GetComponent<Rigidbody>();
     }
+
     void OnCollisionStay(Collision collision)
     {
         foreach (ContactPoint contact in collision.contacts)
         {
             Vector3 contactPoint = contact.point;
-            //normal은 "이 접촉점에서 충돌 대상 오브젝트가 튕겨나가야 할 방향(반대 오브젝트 기준)"을 반영.
-            Vector3 normal = contact.normal; 
+            Vector3 normal = contact.normal;
 
             Collider thisCol = contact.thisCollider;
             Collider otherCol = contact.otherCollider;
-            
+
             Vector3 direction;
             float distance;
-            
+
             bool overlapped = Physics.ComputePenetration(
                 thisCol, thisCol.transform.position, thisCol.transform.rotation,
                 otherCol, otherCol.transform.position, otherCol.transform.rotation,
                 out direction, out distance
             );
-            
-            if (overlapped && distance > 0f)
+
+            if (overlapped && distance > minPenetration)
             {
-                // 복원력 (restoreForce) 계산 : F_n = kN * (침투 깊이) * (침투 벗어나는 방향)
-                // direction은 침투를 벗어나기 위한 단위 벡터이며, distance는 penetration depth를 의미.
+                // 복원력 계산
                 Vector3 restoreForce = kN * distance * direction;
-                Rigidbody otherRb = collision.rigidbody;
-                if (otherRb != null && otherRb.isKinematic == false)
+
+                // 복원력 감쇠 적용
+                restoreForce *= dampingFactor;
+
+                // 복원력 크기 제한
+                if (restoreForce.magnitude > maxForceMagnitude)
                 {
-                    // AddForceAtPosition: 특정 지점(contactPoint)에 힘을 가할 수 있어 회전 모멘트까지 반영 가능.
+                    restoreForce = restoreForce.normalized * maxForceMagnitude;
+                }
+
+                // 충돌 물체에 복원력 적용
+                Rigidbody otherRb = collision.rigidbody;
+                if (otherRb != null && !otherRb.isKinematic)
+                {
                     otherRb.AddForceAtPosition(restoreForce, contactPoint);
                 }
-                if (handRigidbody != null && handRigidbody.isKinematic == false)
+
+                // 현재 물체에도 반작용력 적용
+                if (handRigidbody != null && !handRigidbody.isKinematic)
                 {
-                    // 반작용력 = -restoreForce
                     handRigidbody.AddForceAtPosition(-restoreForce, contactPoint);
                 }
+
+                // 침투 깊이 시각화
+                Debug.DrawLine(contactPoint, contactPoint + (direction * distance), penetrationColor);
+
+                // 복원력 시각화
+                Debug.DrawLine(contactPoint, contactPoint + (restoreForce.normalized * 0.1f), forceColor);
             }
         }
     }

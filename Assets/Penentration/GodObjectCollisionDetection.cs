@@ -1,81 +1,79 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
 public class GodObjectCollisionDetection : MonoBehaviour
 {
-    // 비침투 강성 계수: 값이 클수록 겹침 발생 시 물체를 강하게 밀어냄
-    public float kN = 500f;  
-    private Rigidbody handRigidbody;
+  public Transform handTracking;  // 트래킹된 손의 Transform
+    public Transform handRenderer; // 렌더링된 손의 Transform
 
-    void Awake()
-    {
-        handRigidbody = GetComponent<Rigidbody>();
-    }
+    public float penetrationThreshold = 0.01f; // 관통 허용 임계값
+    public LayerMask collisionLayer; // 충돌 감지 레이어
 
-    // OnCollisionStay: 매 물리 프레임마다 충돌 중인 접점에 대해 콜백 호출
-    void OnCollisionStay(Collision collision)
+    private Vector3 contactPoint;
+    private Vector3 contactNormal;
+    private bool isColliding = false;
+
+    void Update()
     {
-        foreach (ContactPoint contact in collision.contacts)
+        // Step 1: 충돌 감지
+        DetectCollision();
+
+        // Step 2: God-Object 업데이트
+        if (isColliding)
         {
-            Vector3 contactPoint = contact.point;
-            Vector3 normal = contact.normal;
-
-            Collider thisCol = contact.thisCollider;
-            Collider otherCol = contact.otherCollider;
-
-            Vector3 direction;
-            float distance;
-
-            // Physics.ComputePenetration: 두 콜라이더가 얼마나 겹쳤는지 계산
-            bool overlapped = Physics.ComputePenetration(
-                thisCol, thisCol.transform.position, thisCol.transform.rotation,
-                otherCol, otherCol.transform.position, otherCol.transform.rotation,
-                out direction, out distance
-            );
-
-            if (overlapped && distance > 0f)
-            {
-                // 복원력 계산 (F_n = kN * penetration depth * direction)
-                Vector3 restoreForce = kN * distance * direction;
-                Rigidbody otherRb = collision.rigidbody;
-
-                if (otherRb != null && !otherRb.isKinematic)
-                {
-                    // 충돌 속도 계산 (v = n \cdot (\dot{c1} - \dot{c2))
-                    Vector3 relativeVelocity = handRigidbody != null ? handRigidbody.linearVelocity - otherRb.linearVelocity : -otherRb.linearVelocity;
-                    float normalVelocity = Vector3.Dot(normal, relativeVelocity);
-
-                    if (normalVelocity < 0)
-                    {
-                        // 물리적 충돌 반응 계산
-                        otherRb.AddForceAtPosition(restoreForce, contactPoint);
-                    }
-                }
-
-                if (handRigidbody != null && !handRigidbody.isKinematic)
-                {
-                    // 반작용력 적용
-                    handRigidbody.AddForceAtPosition(-restoreForce, contactPoint);
-                }
-            }
+            UpdateRendererPosition();
+        }
+        else
+        {
+            AlignRendererWithTracking();
         }
     }
-    // 충돌 감지 상태 업데이트 (God-Object 접근 반영)
-    private void UpdateContactPoints(Collider otherCol, Vector3 contactPoint, Vector3 normal)
+
+    private void DetectCollision()
     {
-        Vector3 closestPoint = otherCol.ClosestPoint(contactPoint);
-        float penetrationDepth = Vector3.Distance(contactPoint, closestPoint);
+        // Raycast를 사용하여 handTracking 오브젝트와의 충돌을 감지
+        Ray ray = new Ray(handTracking.position, handTracking.forward);
+        RaycastHit hit;
 
-        if (penetrationDepth > 0f)
+        if (Physics.Raycast(ray, out hit, penetrationThreshold, collisionLayer))
         {
-            // 새로운 접촉점으로 업데이트
-            Vector3 direction = (contactPoint - closestPoint).normalized;
-            Vector3 restoreForce = kN * penetrationDepth * direction;
+            isColliding = true;
+            contactPoint = hit.point;
+            contactNormal = hit.normal;
+        }
+        else
+        {
+            isColliding = false;
+        }
+    }
 
-            if (handRigidbody != null && !handRigidbody.isKinematic)
-            {
-                handRigidbody.AddForce(restoreForce);
-            }
+    private void UpdateRendererPosition()
+    {
+        // 렌더링된 손의 위치를 업데이트하여 관통을 방지
+        Vector3 penetrationDepth = contactPoint - handTracking.position;
+        Vector3 correctedPosition = handTracking.position + penetrationDepth.normalized * penetrationThreshold;
+
+        handRenderer.position = correctedPosition;
+
+        // 렌더링된 손의 방향을 표면의 법선 벡터와 정렬
+        handRenderer.rotation = Quaternion.LookRotation(-contactNormal, Vector3.up);
+    }
+
+    private void AlignRendererWithTracking()
+    {
+        // 충돌이 없을 때 렌더링된 손을 트래킹된 손과 정렬
+        handRenderer.position = handTracking.position;
+        handRenderer.rotation = handTracking.rotation;
+    }
+
+    void OnDrawGizmos()
+    {
+        if (isColliding)
+        {
+            // 충돌 지점과 표면 법선 시각화
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(contactPoint, 0.01f);
+            Gizmos.color = Color.blue;
+            Gizmos.DrawLine(contactPoint, contactPoint + contactNormal * 0.1f);
         }
     }
 }

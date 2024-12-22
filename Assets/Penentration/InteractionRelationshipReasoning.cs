@@ -32,7 +32,7 @@ public class InteractionRelationshipReasoning : MonoBehaviour
 
             Rigidbody handRigidbody = collision.rigidbody;
 
-            if (handRigidbody != null && !handRigidbody.isKinematic)
+            if (handRigidbody != null)
             {
                 // 임펄스 기반 상호작용 (Impulse Phase)
                 Vector3 relativeVelocity = objectRigidbody.linearVelocity - handRigidbody.linearVelocity; // 상대 속도
@@ -52,7 +52,6 @@ public class InteractionRelationshipReasoning : MonoBehaviour
                     handRigidbody.AddForceAtPosition(-impulse, contactPoint, ForceMode.Impulse);
 
                     // 충격량 시각화
-                    Debug.DrawLine(contactPoint, contactPoint + impulse, Color.red, 0.5f); // 충격량 벡터 시각화
                     Debug.Log($"Impulse applied at {contactPoint}: {impulse}");
                 }
 
@@ -62,7 +61,6 @@ public class InteractionRelationshipReasoning : MonoBehaviour
                 Vector3 tangentialForce = contactForce - normalForce; // 접선 성분 분리
 
                 // 법선 힘 시각화
-                Debug.DrawLine(contactPoint, contactPoint + normalForce, Color.blue, 0.5f);
                 Debug.Log($"Normal force at {contactPoint}: {normalForce}");
 
                 if (tangentialForce.magnitude <= staticFrictionCoefficient * normalForce.magnitude)
