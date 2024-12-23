@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Renderer))]
 public class CustomCollisionSolver : MonoBehaviour
 {
-   public float kN = 500f; // 비침투 강성 계수
+    public float kN = 500f; // 비침투 강성 계수
     public float minPenetration = 0.01f; // 최소 침투 거리
     public float maxForceMagnitude = 1000f; // 최대 복원력 크기
     public float dampingFactor = 0.9f; // 복원력 감쇠 계수
@@ -14,6 +14,7 @@ public class CustomCollisionSolver : MonoBehaviour
     private Color defaultColor = Color.blue; // 기본 색상 (파란색)
     private Color contactColor = Color.yellow; // 접촉 색상 (노란색)
     private Color penetrationColor = Color.red; // 침투 색상 (빨간색)
+    private Color collisionPointColor = Color.green; // 충돌 지점 색상 (녹색)
 
     private bool isPenetrating = false;
     private bool isContacting = false;
@@ -85,6 +86,9 @@ public class CustomCollisionSolver : MonoBehaviour
                     // 복원력 시각화
                     Debug.DrawLine(contactPoint, contactPoint + (restoreForce.normalized * 0.1f), Color.blue);
                 }
+
+                // 충돌 지점 시각화 추가
+                DrawCollisionPoint(contactPoint);
             }
         }
 
@@ -112,5 +116,22 @@ public class CustomCollisionSolver : MonoBehaviour
         {
             objectRenderer.material.color = defaultColor; // 충돌 없음 파란색
         }
+    }
+
+    /// <summary>
+    /// 충돌 지점을 시각화하는 메서드입니다.
+    /// 작은 십자(X) 모양을 그려 충돌 지점을 표시합니다.
+    /// </summary>
+    /// <param name="point">충돌 지점의 월드 좌표</param>
+    private void DrawCollisionPoint(Vector3 point)
+    {
+        float crossSize = 0.05f; // 십자 크기
+
+        // X 축 방향 십자 선
+        Debug.DrawLine(point - transform.right * crossSize, point + transform.right * crossSize, collisionPointColor);
+        // Y 축 방향 십자 선
+        Debug.DrawLine(point - transform.up * crossSize, point + transform.up * crossSize, collisionPointColor);
+        // Z 축 방향 십자 선
+        Debug.DrawLine(point - transform.forward * crossSize, point + transform.forward * crossSize, collisionPointColor);
     }
 }
